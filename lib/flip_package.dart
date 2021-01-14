@@ -1,6 +1,9 @@
+// Copyright 2021 LTMM. All rights reserved.
+// Uses of this source code is governed by 'The Unlicense' that can be
+// found in the LICENSE file.
+
 library flip_package;
 
-export 'source/cubit/transition_cubit.dart';
 export 'source/flip_widget.dart';
 
 enum FlipSide {

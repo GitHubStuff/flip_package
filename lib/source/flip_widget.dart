@@ -1,3 +1,7 @@
+// Copyright 2021 LTMM. All rights reserved.
+// Uses of this source code is governed by 'The Unlicense' that can be
+// found in the LICENSE file.
+
 import 'dart:math';
 
 import 'package:flip_package/source/cubit/transition_cubit.dart';
@@ -8,40 +12,37 @@ import '../flip_package.dart';
 
 typedef FlipCallback = void Function(FlipSide side);
 
-class FlipWidget extends StatefulWidget {
+class FlipWidget extends StatelessWidget {
   final Widget frontWidget;
   final Widget backWidget;
   final FlipCallback flipCallback;
+  final TransitionCubit cubit;
+  final Duration duration;
+  final bool flipXAxis;
 
   FlipWidget({
     @required this.frontWidget,
     @required this.backWidget,
     @required this.flipCallback,
+    Duration flipDuration,
+    bool flipAlongXAxis,
   })  : assert(frontWidget != null),
         assert(backWidget != null),
-        assert(flipCallback != null);
-
-  @override
-  _FlipWidget createState() => _FlipWidget();
-}
-
-class _FlipWidget extends State<FlipWidget> {
-  TransitionCubit cubit;
-
-  @override
-  void initState() {
-    super.initState();
-    cubit = TransitionCubit(widget.frontWidget, widget.backWidget);
-  }
+        assert(flipCallback != null),
+        duration = flipDuration ?? Duration(milliseconds: 800),
+        flipXAxis = flipAlongXAxis ?? true,
+        cubit = TransitionCubit(frontWidget, backWidget);
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TransitionCubit, TransitionState>(
         cubit: cubit,
         builder: (cntx, state) {
-          debugPrint('State: $state');
+          if (state is TransitionInitial) {
+            cubit.flipXAxis = flipXAxis;
+          }
           if (state is FlipState) {
-            widget.flipCallback(state.faceSide);
+            flipCallback(state.faceSide);
           }
           return _buildFlipAnimation();
         });
