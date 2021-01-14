@@ -21,6 +21,6 @@ class TransitionCubit extends Cubit<TransitionState> {
 
   void flipSides() async {
     currentSide = currentSide.toggle;
-    emit(FlipState());
+    emit(FlipState(currentSide));
   }
 }

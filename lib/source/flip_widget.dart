@@ -4,10 +4,22 @@ import 'package:flip_package/source/cubit/transition_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../flip_package.dart';
+
+typedef FlipCallback = void Function(FlipSide side);
+
 class FlipWidget extends StatefulWidget {
   final Widget frontWidget;
   final Widget backWidget;
-  FlipWidget(this.frontWidget, this.backWidget);
+  final FlipCallback flipCallback;
+
+  FlipWidget({
+    @required this.frontWidget,
+    @required this.backWidget,
+    @required this.flipCallback,
+  })  : assert(frontWidget != null),
+        assert(backWidget != null),
+        assert(flipCallback != null);
 
   @override
   _FlipWidget createState() => _FlipWidget();
@@ -28,23 +40,24 @@ class _FlipWidget extends State<FlipWidget> {
         cubit: cubit,
         builder: (cntx, state) {
           debugPrint('State: $state');
-          if (state is TransitionInitial) {
-            Future.delayed(Duration(seconds: 3), () {
-              cubit.flipSides();
-            });
+          if (state is FlipState) {
+            widget.flipCallback(state.faceSide);
           }
           return _buildFlipAnimation();
         });
   }
 
   Widget _buildFlipAnimation() {
-    return AnimatedSwitcher(
-      duration: Duration(milliseconds: 800),
-      transitionBuilder: __transitionBuilder,
-      layoutBuilder: (widget, list) => Stack(children: [widget, ...list]),
-      child: cubit.visibleSide,
-      switchInCurve: Curves.easeInBack,
-      switchOutCurve: Curves.easeInBack.flipped,
+    return GestureDetector(
+      onTap: () => cubit.flipSides(),
+      child: AnimatedSwitcher(
+        duration: Duration(milliseconds: 800),
+        transitionBuilder: __transitionBuilder,
+        layoutBuilder: (widget, list) => Stack(children: [widget, ...list]),
+        child: cubit.visibleSide,
+        switchInCurve: Curves.easeInBack,
+        switchOutCurve: Curves.easeInBack.flipped,
+      ),
     );
   }
 
