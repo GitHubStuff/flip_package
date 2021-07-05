@@ -21,22 +21,17 @@ class FlipWidget extends StatelessWidget {
   final bool flipXAxis;
 
   FlipWidget({
-    @required this.frontWidget,
-    @required this.backWidget,
-    @required this.flipCallback,
-    Duration flipDuration,
-    bool flipAlongXAxis,
-  })  : assert(frontWidget != null),
-        assert(backWidget != null),
-        assert(flipCallback != null),
-        duration = flipDuration ?? Duration(milliseconds: 800),
-        flipXAxis = flipAlongXAxis ?? true,
-        cubit = TransitionCubit(frontWidget, backWidget);
+    required this.frontWidget,
+    required this.backWidget,
+    required this.flipCallback,
+    this.duration = const Duration(milliseconds: 800),
+    this.flipXAxis = true,
+  }) : cubit = TransitionCubit(frontWidget, backWidget);
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TransitionCubit, TransitionState>(
-        cubit: cubit,
+        bloc: cubit,
         builder: (cntx, state) {
           if (state is TransitionInitial) {
             cubit.flipXAxis = flipXAxis;
@@ -54,7 +49,7 @@ class FlipWidget extends StatelessWidget {
       child: AnimatedSwitcher(
         duration: Duration(milliseconds: 800),
         transitionBuilder: __transitionBuilder,
-        layoutBuilder: (widget, list) => Stack(children: [widget, ...list]),
+        layoutBuilder: (widget, list) => Stack(children: [widget!, ...list]),
         child: cubit.visibleSide,
         switchInCurve: Curves.easeInBack,
         switchOutCurve: Curves.easeInBack.flipped,
@@ -68,7 +63,7 @@ class FlipWidget extends StatelessWidget {
       animation: rotateAnim,
       child: widget,
       builder: (context, widget) {
-        final isUnder = (ValueKey(cubit.currentSide) != widget.key);
+        final isUnder = (ValueKey(cubit.currentSide) != widget!.key);
         var tilt = ((animation.value - 0.5).abs() - 0.5) * 0.003;
         tilt *= isUnder ? -1.0 : 1.0;
         final value = isUnder ? min(rotateAnim.value, pi / 2) : rotateAnim.value;

@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return FlipWidget(
       frontWidget: Container(height: 100, width: 100, color: Colors.blue),
       backWidget: Container(height: 100, width: 100, color: Colors.green),
-      flipAlongXAxis: false,
+      flipXAxis: false,
       flipCallback: (side) {
         debugPrint('Side: $side');
       },

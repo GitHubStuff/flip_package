@@ -9,8 +9,8 @@ part 'transition_state.dart';
 class TransitionCubit extends Cubit<TransitionState> {
   FlipSide currentSide = FlipSide.front;
   bool flipXAxis = true;
-  Widget frontSide;
-  Widget backSide;
+  late Widget frontSide;
+  late Widget backSide;
 
   TransitionCubit(Widget frontWidget, Widget backWidget) : super(TransitionInitial()) {
     frontSide = Container(key: ValueKey(FlipSide.front), child: frontWidget);

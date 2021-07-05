@@ -5,13 +5,13 @@ author: Steven Smith
 homepage: http://www.icodeforyou.com
 
 environment:
-  sdk: ">=2.10.4 <3.0.0"
-  flutter: ">=1.22.5"
+  sdk: ">=2.13.4 <3.0.0" #Dart SDK 1-JUL-2021
+  flutter: ">=2.2.3"
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_bloc: ^6.1.1
+  flutter_bloc: ^7.0.1
 
 dev_dependencies:
   flutter_test:
