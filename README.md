@@ -29,3 +29,7 @@ flipAlongXAxis - default 'true' flips along the X-axis. 'false' flips along Y-ax
 duration - default is 800 milliseconds
 
 flipCallback - FlipSide is enum with values 'front' and 'back', this callback is made each time (after inital display) if the frontWidget or backWidget is displayed.
+
+## Final Note
+
+Be Kind to each other

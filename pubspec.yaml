@@ -1,6 +1,6 @@
 name: flip_package
-description: Template for Flutter Package project.
-version: 0.0.1
+description: Allows the 'flip' of two widgets, like the reveal of deck of cards
+version: 0.0.2
 author: Steven Smith
 homepage: http://www.icodeforyou.com
 
